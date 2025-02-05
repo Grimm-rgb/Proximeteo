@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<Head>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+<link rel="stylesheet" href="custom.css">
+</Head>
+
+<body>
+    <header>
+        <H1>Proximétéo</H1>
+        La météo de proximitée
+    </header>
+        <p>
+        <div class="text"> Quelle température fait-il chez vous aujourd'hui?<br>
+        Découvrons le tout de suite!<br>
+        Température actuelle :</div>
+        <div class="bigbox">
+            <div class="Temp"> °C </div>
+            <div class="Humidity"> %</div>
+        </div>
+            <div class="graph">
+              <canvas id="tempChart" width="400" height="400" style="margin: auto;"></canvas>
+              <canvas id="humidityChart" width="400" height="400" style="margin: auto;"></canvas>
+            </div>
+            <!-- <div class="onoff">
+            <input type="checkbox" id="switch" class="checkbox" />
+            <label for="switch" class="toggle">
+              <span>OFF</span>
+              <span>ON</span>
+            </label>
+            Etat de la sonde 
+          </div> -->
+        </p>
+</body>
+ 
+<footer>
+  Proximétéo <br>
+  22b cap vert,<br>
+  Quetigny 21140
+</footer>
+
+<script>
+    const ctemp = document.getElementById('tempChart');
+    const htemp = document.getElementById('humidityChart');
+
+    chart_temp = new Chart(ctemp, {
+      type: 'bar',
+      data: {
+        labels: ['N-5', 'N-4', 'N-3', 'N-2', 'N-1', 'N'],
+        datasets: [{
+          label: 'Température',
+          data: [1, 2, 3, 4, 5, 6],
+          borderColor: '#FF6384',
+          backgroundColor: '#FFB1C1',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    chart_humidite = new Chart(htemp, {
+      type: 'bar',
+      data: {
+        labels: ['N-5', 'N-4', 'N-3', 'N-2', 'N-1', 'N'],
+        datasets: [{
+          label: 'Humidité',
+          data: [1, 2, 3, 4, 5, 6],
+          borderColor: '#092894',
+          backgroundColor: '#0A88EB',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+    
+    const API_URL = "http://127.0.0.1:8000"
+    const CURRENT_TEMP_DIV = document.querySelector(".Temp")
+    const CURRENT_HUMID_DIV = document.querySelector(".Humidity")
+
+    function renderChart(){
+      fetch(API_URL+"/releve/").then(response => response.json()).then(data => {
+        temperatures = data.map(x => x.temperature)
+        humidites = data.map(x => x.humidite)
+        
+        chart_temp.data.datasets[0].data = temperatures
+        chart_humidite.data.datasets[0].data = humidites
+
+        if (data.length < 6){
+          for (let i = 0; i < 6 - data.length; i++) {
+            temperatures.unshift(0)
+            humidites.unshift(0)
+          }
+        }
+
+        chart_temp.update();
+        chart_humidite.update();
+
+        CURRENT_TEMP_DIV.innerHTML = temperatures[temperatures.length -1]+" °C"
+        CURRENT_HUMID_DIV.innerHTML = humidites[humidites.length -1]+" %"
+      })
+    }
+
+    renderChart()
+    
+  </script>
+
+  
+</html>

@@ -1,0 +1,81 @@
+.Temp, .Humidity{
+   font-size: 40px;
+}
+
+.bigbox{
+   display: flex;
+   column-gap: 50px;
+   margin-top: 20px;
+   margin-bottom: 20px;
+   justify-content: center;
+}
+
+.text{
+   display: flex;
+   align-items: center;
+   text-align: center;
+   justify-content: center;
+}
+canvas{
+   display: inline-flex !important;
+   justify-content: center;
+   align-items: center;
+}
+
+
+
+.graph{
+  display: flex;
+  margin-bottom: 20px;
+  flex-direction: column;
+}
+
+/* .onoff{
+   display: flex;
+   flex-direction: row;
+   justify-content: space-around;
+   align-items: center;
+} */
+
+/* toggle in label designing
+.toggle {
+   position : relative ;
+   display : flex !important;
+   justify-content: space-evenly;
+   align-items: center;
+   width : 100px;
+   height : 52px;
+   background-color: rgb(255, 255, 255);
+   border-radius: 30px;
+   border: 2px solid gray;
+   font-family: sans-serif;
+   font-weight: bold;
+}
+      
+/* After slide changes */
+/* .toggle:after {
+   content: '';
+   position: absolute;
+   width: 50px;
+   height: 50px;
+   border-radius: 50%;
+   background-color: rgb(72, 71, 71);
+   top: 0;
+   left: 0;
+   transition:  all 0.5s;
+}
+      
+/* Checkbox checked effect */
+/* .checkbox:checked + .toggle::after {
+   left : 49px;
+} */
+      
+/* Checkbox checked toggle label bg color */
+/* .checkbox:checked + .toggle {
+   background-color: rgba(255, 255, 255, 0.076);
+} */ 
+      
+/* Checkbox vanished */
+/* .checkbox {
+   display : none;
+} */ 
